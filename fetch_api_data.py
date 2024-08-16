@@ -3,7 +3,10 @@ import pandas as pd
 import requests
 import os
 from google.cloud import storage
+from dotenv import load_dotenv
+import os 
 
+load_dotenv()
 
 def upload_file_to_gcs(bucket_name,destination_blob_name,source_file_name):
 
@@ -17,7 +20,7 @@ def upload_file_to_gcs(bucket_name,destination_blob_name,source_file_name):
 
 
 def fetch_data():
-    url = 'https://newsapi.org/v2/everything?q=tesla&from=2024-07-16&sortBy=publishedAt&apiKey=8e41052dffa645a481669bf3de80332e'
+    url = f'https://newsapi.org/v2/everything?q=tesla&from=2024-07-16&sortBy=publishedAt&apiKey={os.getenv('apiKey')}'
     response = requests.get(url=url)
     data = response.json()
     df = pd.DataFrame(columns=['article_name','author','title','url','description'])
